@@ -1,0 +1,62 @@
+[
+    {
+        "title": "Audit Trail",
+        "properties":
+        [
+            {
+                "name": "id",
+                "label": "ID",
+                "type": "autocomplete",
+                "required": "True",
+                "regex_validation": "^[a-zA-Z0-9_]+$",
+                "validation_message": "Only alpha-numeric and underscore characters allowed",
+                "options_callback": "FormBuilder.getAllFieldOptions"
+            },
+            {
+                "name": "label",
+                "label": "Label",
+                "type": "textfield",
+                "required": "True",
+                "value": "My Plugin"
+            },
+            {
+                "name": "step",
+                "label": "Step",
+                "type": "grid",
+                "columns": [
+                    {
+                        "key": "label",
+                        "label": "Label"
+                    },
+                    {
+                        "key": "icon",
+                        "label": "Icon",
+                        "options":[
+                            {
+                                "value": "person",
+                                "label": "Person"
+                            },
+                            {
+                                "value": "document",
+                                "label": "Document"
+                            },
+                            {
+                                "value": "system",
+                                "label": "System"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "activities",
+                        "label": "Activities"
+                    }
+                ]
+            },
+            {
+                "name": "readonly",
+                "value": "True",
+                "type": "hidden"
+            }
+        ]
+    }
+]
