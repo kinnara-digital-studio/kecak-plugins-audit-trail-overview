@@ -33,16 +33,24 @@
                         "label": "Icon",
                         "options":[
                             {
-                                "value": "person",
+                                "value": "user",
                                 "label": "Person"
                             },
                             {
-                                "value": "document",
+                                "value": "file",
                                 "label": "Document"
                             },
                             {
-                                "value": "system",
+                                "value": "desktop",
                                 "label": "System"
+                            },
+                            {
+                                "value": "home",
+                                "label": "Home"
+                            },
+                            {
+                                "value": "mobile",
+                                "label": "Mobile"
                             }
                         ]
                     },

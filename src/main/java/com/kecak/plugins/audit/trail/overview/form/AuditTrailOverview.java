@@ -113,17 +113,37 @@ public class AuditTrailOverview extends Element implements FormBuilderPaletteEle
             String last = "";
             for (WorkflowActivity items:history)
             {
-                LogUtil.info(getClassName(), "Activity Def ID: " + items.getActivityDefId());
+                // LogUtil.info(getClassName(), "Activity Def ID: " + items.getActivityDefId());
                 activityDefID.add(items.getActivityDefId());
-                String [] arr = ((LinkedList<String>) activityDefID).getLast().split(";");
                 last = ((LinkedList<String>) activityDefID).getLast();
             }
-
-            LogUtil.info(getClassName(), "in Index: " + activityDefID.indexOf(last));
-            dataModel.put("index", activityDefID.indexOf(last));
+            // LogUtil.info(getClassName(), "Last ActdefID: " + last);
+            int index = getIndex(propertyGrid, last);
+            // LogUtil.info(getClassName(), "getin index: " + index);
+            if (index == -1)
+            {
+                LogUtil.warn(getClassName(), "Activities " + last +" cannot be found");
+            }
+            dataModel.put("index", index);
         }
-
         return FormUtil.generateElementHtml(this, formData, "atoverview.ftl", dataModel);
     }
-    
+
+    protected int getIndex(Map <String,String>[]step, String activityDefID)
+    {
+        for (int i = 0; i < step.length; i++)
+        {
+            String act = step[i].get("activities");
+            LogUtil.info(getClassName(), "Step ke " + i + " adalah " + act);
+            String [] arrayofActivities = act.split(";");
+            for (String strActivities: arrayofActivities)
+            {
+                if (strActivities.equals(activityDefID))
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 }

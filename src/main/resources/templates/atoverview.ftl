@@ -1,12 +1,11 @@
+<head>
+    <style>
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    </style>
+</head>
+
 <div class="form-cell" ${elementMetaData!}>
     <style>
-        :root {
-            /*---------------------------------
-   Configure the number of Nodes-1
-  ---------------------------------*/
-            --NumberOfWorkflowTransitions: 5;
-        }
-
         .hidden {
             display: none;
         }
@@ -50,7 +49,7 @@
             top: 50%;
             height: 20px;
             width: 100%;
-            background-color: #ccc;
+            <#--  background-color: #ccc;  -->
             -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
         }
@@ -62,7 +61,7 @@
             top: 50%;
             height: 20px;
             width: 100%;
-            background-color: #2C3E50;
+            <#--  background-color: #2C3E50;  -->
             -webkit-transform: scaleX(0) translateY(-50%);
             transform: scaleX(0) translateY(-50%);
             -webkit-transform-origin: left center;
@@ -120,9 +119,19 @@
         #workflow-progress .progress-bar {
             width: 100%;
             display: flex;
-            height: 200px;
+            height: 14rem;
             justify-content: space-between;
             align-items: center;
+            background-color: white;
+        }
+
+        .workflow-bar{
+            width: 100%;
+            display: flex;
+            height: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #998479;
         }
 
         #workflow-progress .progress-bar .step {
@@ -200,7 +209,39 @@
             transform: translate(-50%, -50%);
             width: 75px;
             height: 75px;
-            background-color: #fff;
+            background-color: #808080;
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            transition: 0.3s ease;
+        }
+
+        #workflow-progress .progress-bar .step-check:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 75px;
+            height: 75px;
+            background-color: #4591a7;
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            transition: 0.3s ease;
+        }
+
+        #workflow-progress .progress-bar .step-editing:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 75px;
+            height: 75px;
+            background-color: #FFAE42;
             border-radius: 50%;
             border: 5px solid #ccc;
             transition: 0.3s ease;
@@ -219,7 +260,7 @@
         }
 
         #workflow-progress .progress-bar .step.valid:after {
-            background-color: #34AD16;
+            <#--  background-color: #34AD16;  -->
             border: 5px solid #34AD16;
         }
 
@@ -242,273 +283,38 @@
         .material-icons {
             font-size: 48px;
         }
-
-        /*-------------------------------------------*/
-        /*------TEST CODE TO BE REMOVED IN PROD------*/
-        /*-------------------------------------------*/
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            width: 100%;
-            margin: 100px auto 0px;
-        }
-
-        .button-container .btn {
-            display: inline-block;
-            background-color: #2C3E50;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            font-weight: 900;
-            border: 3px solid #2C3E50;
-            transition: 0.3s ease;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        @media (max-width: 767px) {
-            .button-container .btn {
-                width: 100%;
-                margin-bottom: 15px;
-            }
-        }
-
-        .button-container .btn:hover {
-            background-color: transparent;
-            color: #2C3E50;
-            -webkit-transform: scale(1.02);
-            transform: scale(1.02);
-        }
     </style>
 
     <div id="main-container">
         <div class="step-1" id="workflow-progress" data-current-step="1">
             <div class="progress-bar">
-                <#list propertyGrid! as items>
-                    <div class="step step-${items?index}"><span class="material-icons">${items["icon"]}</span>
-                        <#if items?index <= index>
-                        <div class="fa fa-check opaque">Index: ${index}</div>
-                        <#else>
-                        <div class="fa fa-check opaque">Not inside index</div>
-                        </#if>
+                <div class="workflow-bar">
+                    <#list propertyGrid! as items>
+                        <#if items?index < index!-1>
+                        <div class="step step-check step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}' aria-hidden="true"></i></span>
+                        <div class="fa fa-check opaque"></div>
                         <div class="step-label">
-                            <div class="step-label-name" id="${items?index}">${items["label"]}</div>
+                                <div class="step-label-name" id="${items?index}">${items["label"]}</div>
+                            </div>
                         </div>
-                    </div>
-                </#list>
-
-<#--                  
-
-                <div class="step step-2"><span>A</span>
-                    <div class="fa fa-check opaque"></div>
-                    <div class="step-label">
-                        <div class="step-label-name" id="2">Assessment</div>
-                    </div>
-                </div>
-
-                <div class="step step-3"><span class="fas fa-edit"></span>
-                    <div class="fa fa-check opaque"></div>
-                    <div class="step-label">
-                        <div class="step-label-name" id="3">Review</div>
-                        <div class="step-label-substates" style="position:absolute; font-size:0.8em;">
-                            <ul>
-                                <li class="step-label-substate" id='3.1'>In Progress</li>
-                                <li class="step-label-substate" id="3.2">Rejected</li>
-                            </ul>
+                        <#elseif items?index = index!-1>
+                        <div class="step step-editing step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}'></i></span>
+                        <div class="fa fa-check opaque"></div>
+                        <div class="step-label">
+                                <div class="step-label-name" id="${items?index}">${items["label"]}</div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="step step-4"><span>M</span>
-                    <div class="fa fa-check opaque"></div>
-                    <div class="step-label">
-                        <div class="step-label-name" id="4">Mitigation</div>
-                    </div>
-                </div>
-
-                <div class="step step-5"><span class="fa fa-hourglass"></span>
-                    <div class="fa fa-check opaque"></div>
-                    <div class="step-label">
-                        <div class="step-label-name" id="5">Wait Decision</div>
-                        <div class="step-label-substates" style="position:absolute; font-size:0.8em;">
-                            <ul>
-                                <li class="step-label-substate" id="5.1">In Progress</li>
-                                <li class="step-label-substate" id="5.2">Rejected</li>
-                            </ul>
+                        <#else>
+                        <div class="step step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}'></i></span>
+                        <div class="fa fa-check opaque"></div>
+                        <div class="step-label">
+                                <div class="step-label-name" id="${items?index}">${items["label"]}</div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="step step-6"><span class="fa fa-award"></span>
-                    <div class="fa fa-check opaque"></div>
-                    <div class="step-label">
-                        <div class="step-label-name" id="6">Complete</div>
-                    </div>
-                </div>  -->
-
+                        </#if>
+                    </#list>
+                </div>                
             </div>
         </div>
     </div>
-    <!----------------------------------->
-    <!--TEST CODE TO BE REMOVED IN PROD-->
-    <!------------------------------------>
-    <#--  <div class="button-container">
-        <div class="btn btn-prev disabled"> previous step</div>
-        <div class="btn btn-next"> next step</div>
-        <div class="btn btn-reset">Reset</div>
-    </div>  -->
-    <#--  <script>
-        //#####################################
-        // WOPROG - Workflow Progress Bar v0.1
-        // By Luciano Veronese
-        // December 2018
-        //#####################################
-
-        //---------------------
-        // Values to be updated
-        //---------------------
-        var NumberOfWorkflowNodes = 6; /* Number of Workflow Nodes */
-        var TxtVLId = 26351; // Field ID of the values list (flat, text, calculated) that hosts the workflow status
-        //---------------------
-
-        var stateMap = new Map();
-        var substateIdMap = new Map();
-        var nTargetState;
-        var nTargetSubState;
-
-        //Sys.Application.add_load(function() { // When the webform is loaded...
-        console.log("_______WOPROG CUSTOM OBJECT START_______");
-        debugger;
-        // Fetch the value of the target WF state 
-        var sVLvalue = $('[id*="f' + TxtVLId + 'c"]').text().trim();
-        // Get main state name (remove possible substates)
-        // Substates are VL items below the main state and that start with the '>' separator
-        //var sTargetState=(sVLvalue.split('>'))[0]; 
-        //var sTargetSubState=(sVLvalue.split('>'))[1]; 
-        sTargetState = "Review";
-        sTargetSubState = "In Progress";
-
-        // Read the HTML structure to map the values list names and the IDs
-        $('.progress-bar .step-label').each(function (index) {
-            var sCurrentMainState = $(this).children("div.step-label-name").text();
-            stateMap.set(sCurrentMainState, index + 1); // Build map [state name, state number]
-
-            var ultag = $(this).children("div.step-label-substates"); // Check if substates are defined
-            if (ultag.html()) {
-                // Substates are defined in the HTML, so build the map [substate name, ID] 
-                ultag.find("li").each(function (i) {
-                    substateIdMap.set(sCurrentMainState + ">" + $(this).text(), $(this).attr("id"));
-                });
-            }
-        });
-
-        // Get the numeric ID of the active main state (used to land the animation to)
-        nTargetState = stateMap.get(sTargetState);
-        console.log("Active Main State: " + sTargetState + ", " + nTargetState);
-
-        console.log("---MAIN STATES---");
-        const sm = stateMap.forEach((v, k) => { console.log(v, k); });
-        console.log("---DETECTED SUB STATES---");
-        const ssm = substateIdMap.forEach((v, k) => { console.log(v, k); });
-
-        /* Start from the beginning and run the animation until the landing state */
-        reset();
-        for (var i = 1; i < nTargetState; i++)
-            StepForward();
-
-        // Check is an active substates (AFTER the animation) is defined  so we have to apply the style
-        if (sTargetSubState) {
-            // Get unique substate identifier as substates might have the same name, but different IDs
-            var SubstateID = substateIdMap.get(sTargetState + ">" + sTargetSubState);
-            console.log("Styling active substate: " + sTargetState + ">" + sTargetSubState + ", " + SubstateID);
-            $("[id='" + SubstateID + "']").addClass('substate-active');
-        }
-
-        //});
-
-        //-----------------------
-        // Reset the workflow bar
-        //-----------------------
-        function reset() {
-            $('#workflow-progress').data('current-step', 0);
-
-            // Reset all the classes
-            $(".step").each(function () {
-                $(this).removeClass("active");
-                $(this).find('span').removeClass('opaque');
-                $(this).removeClass("valid");
-                $(this).find('.fa.fa-check').addClass('opaque');
-            });
-            // Set first state active
-            StepForward();
-            // Remove formatting of substates
-            $(".progress-bar").find(".step-label-substate").removeClass('substate-active');
-        }
-
-        //---------------------------------------
-        // Move the workflow bar one step forward
-        //---------------------------------------
-        function StepForward() {
-            var currentStepNum = $('#workflow-progress').data('current-step');
-            var nextStepNum = (currentStepNum + 1);
-            var currentStep = $('.step.step-' + currentStepNum);
-            var nextStep = $('.step.step-' + nextStepNum);
-            var progressBar = $('#workflow-progress');
-
-            $('.workflow-progress').removeClass('.step-' + currentStepNum).addClass('.step-' + (currentStepNum + 1));
-
-            currentStep.removeClass('active').addClass('valid');
-            currentStep.find('span').addClass('opaque');
-            currentStep.find('.fa.fa-check').removeClass('opaque');
-
-            nextStep.addClass('active');
-            progressBar.removeAttr('class').addClass('step-' + nextStepNum).data('current-step', nextStepNum);
-
-            /*------TEST CODE TO BE REMOVED IN PROD------*/
-            $('.btn-prev').removeClass('disabled');
-            if (currentStepNum > NumberOfWorkflowNodes) { return false; }
-            if (nextStepNum == NumberOfWorkflowNodes) { $(this).addClass('disabled'); }
-        }
-
-        /*-------------TEST CODE TO BE REMOVED IN PROD-------------*/
-
-        $('.btn-reset').on('click', reset);
-
-        $('.btn-next').on('click', StepForward);
-
-        $('.btn-prev').on('click', function () {
-            var currentStepNum = $('#workflow-progress').data('current-step');
-            var prevStepNum = (currentStepNum - 1);
-            var currentStep = $('.step.step-' + currentStepNum);
-            var prevStep = $('.step.step-' + prevStepNum);
-            var progressBar = $('#workflow-progress');
-            $('.btn-next').removeClass('disabled');
-            if (currentStepNum == 1) {
-                return false;
-            }
-            if (prevStepNum == 1) {
-                $(this).addClass('disabled');
-            }
-            $('.workflow-progress').removeClass('.step-' + currentStepNum).addClass('.step-' + (prevStepNum));
-
-            currentStep.removeClass('active');
-            prevStep.find('span').removeClass('opaque');
-            prevStep.find('.fa.fa-check').addClass('opaque');
-
-            prevStep.addClass('active').removeClass('valid');
-            progressBar.removeAttr('class').addClass('step-' + prevStepNum).data('current-step', prevStepNum);
-        });
-
-        $("div.step.step-1").on("click", function () {
-
-            var nTargetState = stateMap.get(sTargetState);
-            console.log(sTargetState);
-            reset();
-            for (var i = 1; i <= nTargetState - 1; i++)
-                StepForward();
-        });
-
-    </script>  -->
 </div>
