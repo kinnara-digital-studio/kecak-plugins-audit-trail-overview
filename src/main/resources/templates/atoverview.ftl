@@ -131,7 +131,19 @@
             height: 1rem;
             justify-content: space-between;
             align-items: center;
-            background-color: #998479;
+            background-image: linear-gradient(to right, 
+            <#list propertyGrid! as items>
+                <#if items?index < index!-1>
+                    #4591A7
+                <#elseif items?index = index!-1>
+                    #FFF
+                <#else>
+                    grey
+                </#if>
+                <#if items?has_next>
+                    ,
+                </#if>
+            </#list>);
         }
 
         #workflow-progress .progress-bar .step {
@@ -147,8 +159,8 @@
             transform: translateX(-50%);
             white-space: nowrap;
             font-size: 0.4em;
-            font-weight: 600;
-            color: #ccc;
+            font-weight: 200;
+            color: #000;
             transition: 0.3s ease;
         }
 
@@ -159,7 +171,7 @@
         }
 
         #workflow-progress .progress-bar .step span {
-            color: #ccc;
+            color: #FFF;
             transition: 0.3s ease;
             display: block;
             -webkit-transform: translate3d(0, 0, 0) scale(1);
@@ -225,7 +237,7 @@
             transform: translate(-50%, -50%);
             width: 75px;
             height: 75px;
-            background-color: #4591a7;
+            background-color: #4591A7;
             border-radius: 50%;
             border: 5px solid #ccc;
             transition: 0.3s ease;
@@ -241,7 +253,7 @@
             transform: translate(-50%, -50%);
             width: 75px;
             height: 75px;
-            background-color: #FFAE42;
+            background-color: #FFF;
             border-radius: 50%;
             border: 5px solid #ccc;
             transition: 0.3s ease;
@@ -291,21 +303,21 @@
                 <div class="workflow-bar">
                     <#list propertyGrid! as items>
                         <#if items?index < index!-1>
-                        <div class="step step-check step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}' aria-hidden="true"></i></span>
+                        <div class="step step-check step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}' aria-hidden="true" style="font-size:40px;"></i></span>
                         <div class="fa fa-check opaque"></div>
                         <div class="step-label">
                                 <div class="step-label-name" id="${items?index}">${items["label"]}</div>
                             </div>
                         </div>
                         <#elseif items?index = index!-1>
-                        <div class="step step-editing step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}'></i></span>
+                        <div class="step step-editing step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}' style="font-size:40px; color:#000;"></i></span>
                         <div class="fa fa-check opaque"></div>
                         <div class="step-label">
                                 <div class="step-label-name" id="${items?index}">${items["label"]}</div>
                             </div>
                         </div>
                         <#else>
-                        <div class="step step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}'></i></span>
+                        <div class="step step-${items?index}"><span class="material-icons"><i class='fa fa-${items["icon"]}' style="font-size:40px;"></i></span>
                         <div class="fa fa-check opaque"></div>
                         <div class="step-label">
                                 <div class="step-label-name" id="${items?index}">${items["label"]}</div>
